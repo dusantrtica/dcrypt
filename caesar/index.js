@@ -29,7 +29,7 @@ export const crackBruteForce = (text, expected) => {
 }
 
 export const freqencyAnalysis = (text) => {
-    return text.split('').reduce((acc, curr) => ({
+    return text.split('').filter(c => c !== ' ').reduce((acc, curr) => ({
         ...acc,
         [curr]: (acc[curr] || 0) + 1
     }), {})
@@ -39,11 +39,14 @@ export const crackByFreqAnalysis = (text) => {
     const histogram = freqencyAnalysis(text)
     const sortedHistogram = Object.entries(histogram)
         .sort(([, a], [, b]) => b - a)
+    console.log(sortedHistogram)
     const mostFrequentLetter = sortedHistogram[0][0]
     const indexOfE = ALPHABET.indexOf('E')
     const indexOfMostFrequentLetter = ALPHABET.indexOf(mostFrequentLetter)
+    console.log(`Most frequent letter ${mostFrequentLetter} has index of ${indexOfMostFrequentLetter} and
+    index of E is ${indexOfE}`)
 
-    const key = Math.abs(indexOfMostFrequentLetter - indexOfE)
+    const key = Math.abs(indexOfMostFrequentLetter)
 
     return key
 }
