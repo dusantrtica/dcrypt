@@ -48,11 +48,15 @@ describe('Frequency Analisys', () => {
 })
 
 describe('Crack By Freq. Analysis', () => {
-    const text = `This is very long sentence and I have been working lately on this algorithm However for some reason i cannot make it work as I am obviosly missing some information but neverthelss i wont give up`.toUpperCase()
+    // Remove spaces as first
+    const text = `This is very long sentence and I have been working lately on this algorithm However for some reason i cannot make it work as I am obviosly missing some information but neverthelss i wont give up`
+        .toUpperCase()
+        .split(' ')
+        .join('')
+
 
     it('should guess the key', () => {
         const key = Math.floor(Math.random() * 27)
-        console.log('key is ', key)
         const encryptedText = encrypt(text, key)
 
         const guessedKey = crackByFreqAnalysis(encryptedText)

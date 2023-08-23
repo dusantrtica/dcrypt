@@ -35,18 +35,23 @@ export const freqencyAnalysis = (text) => {
     }), {})
 }
 
-export const crackByFreqAnalysis = (text) => {
-    const histogram = freqencyAnalysis(text)
+export const crackByFreqAnalysis = (encryptedText) => {
+    /*
+    The most common letter in English is E. As Casear algo simply
+    slides (moves) letters by a constant factor, if you get the most frequenst
+    letter in an encrypted text it is quite likely that letter will correspods to
+    'E' translated by that constant factor which is actually a key we want to get (crack).
+    Algorithms of such type are called information leaking.
+    */
+    const histogram = freqencyAnalysis(encryptedText)
     const sortedHistogram = Object.entries(histogram)
         .sort(([, a], [, b]) => b - a)
-    console.log(sortedHistogram)
+
     const mostFrequentLetter = sortedHistogram[0][0]
     const indexOfE = ALPHABET.indexOf('E')
     const indexOfMostFrequentLetter = ALPHABET.indexOf(mostFrequentLetter)
-    console.log(`Most frequent letter ${mostFrequentLetter} has index of ${indexOfMostFrequentLetter} and
-    index of E is ${indexOfE}`)
 
-    const key = Math.abs(indexOfMostFrequentLetter)
+    const key = Math.abs(indexOfMostFrequentLetter - indexOfE)
 
     return key
 }
